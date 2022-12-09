@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/ReactJack/static/css/main.5f09b182.css",
+    "main.js": "/ReactJack/static/js/main.be1d5c6e.js",
+    "index.html": "/ReactJack/index.html",
+    "main.5f09b182.css.map": "/ReactJack/static/css/main.5f09b182.css.map",
+    "main.be1d5c6e.js.map": "/ReactJack/static/js/main.be1d5c6e.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.5f09b182.css",
+    "static/js/main.be1d5c6e.js"
+  ]
+}
