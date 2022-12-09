@@ -84,6 +84,52 @@ export default function MainApp() {
         setComputerCards([card2, card4]);
     }
 
+    function playerScore() {
+        let score = 0;
+        playerCards.forEach(card => {
+            if (card.Value === 'Ace') {
+                score += 11;
+            }
+            else if (card.Value === 'Jack' || card.Value === 'Queen' || card.Value === 'King') {
+                score += 10;
+            }
+            else {
+                score += parseInt(card.Value);
+            }
+        });
+        if (score > 21) {
+            playerCards.forEach(card => {
+                if (card.Value === 'Ace') {
+                    score -= 10;
+                }
+            });
+        }
+        return score;
+    }
+    
+    function computerScore() {
+        let score = 0;
+        computerCards.forEach(card => {
+            if (card.Value === 'Ace') {
+                score += 11;
+            }
+            else if (card.Value === 'Jack' || card.Value === 'Queen' || card.Value === 'King') {
+                score += 10;
+            }
+            else {
+                score += parseInt(card.Value);
+            }
+        });
+        if (score > 21) {
+            computerCards.forEach(card => {
+                if (card.Value === 'Ace') {
+                    score -= 10;
+                }
+            });
+        }
+        return score;
+    }
+
     function CardDisply(props) {
         function makeCardReadbable(card) { return card.Value + " of " + card.Suit; }
         return (
@@ -96,7 +142,7 @@ export default function MainApp() {
                 {props.player[4] && <h2>{makeCardReadbable(props.player[4])}</h2>}
                 {props.player[5] && <h2>{makeCardReadbable(props.player[5])}</h2>}
                 <h1>Computer:</h1>
-                <h2>{makeCardReadbable(props.computer[0])}</h2>
+                <h2>UNKNOWN CARD</h2>
                 <h2>{makeCardReadbable(props.computer[1])}</h2>
             </div>
         );
@@ -111,7 +157,31 @@ export default function MainApp() {
         setPlayerCards([...playerCards, newCard]);
     }
     function stay() {
-        
+        if (playerScore() <= 21) {
+            if (computerScore() < 17) {computersTurn()}}
+        else {
+            alert(`You Lose! player score was ${playerScore()} and computer score was ${computerScore()}`);
+        }
+    }
+
+    function computersTurn() {
+        let newDeck = currentDeck;
+        let newCard = newDeck[Math.floor(Math.random() * newDeck.length)];
+        newDeck = newDeck.filter(function (obj) {
+            return obj !== newCard;
+        });
+        setCurrentDeck(newDeck);
+        setComputerCards([...computerCards, newCard]);
+        if (computerScore() > 21) {
+            alert(`You Win! player score was ${playerScore()} and computer score was ${computerScore()}`);
+        } else {
+            if (playerScore() > computerScore()) {
+                alert(`You Win! player score was ${playerScore()} and computer score was ${computerScore()}`);
+            }
+            else if (playerScore() <= computerScore()) {
+                alert(`You Lose! player score was ${playerScore()} and computer score was ${computerScore()}`);
+            }
+        }
     }
 
     return (
@@ -120,11 +190,11 @@ export default function MainApp() {
             </Box>
             <Button onClick={dealMeIn}>MAIN BUTTON</Button>
             {playerCards.length > 0 && computerCards.length > 0 ? <CardDisply player={playerCards} computer={computerCards} /> : null}
-            {playerCards.length > 0 && computerCards.length > 0 ? 
-            <div>
-                <Button onClick={hitMe}>HitMe</Button>
-                <Button onClick={stay}>Stay</Button>
-            </div> : null}
+            {playerCards.length > 0 && computerCards.length > 0 ?
+                <div>
+                    <Button onClick={hitMe}>HitMe</Button>
+                    <Button onClick={stay}>Stay</Button>
+                </div> : null}
         </div>
     );
 }
