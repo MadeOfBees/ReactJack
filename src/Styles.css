@@ -1,16 +1,18 @@
 .Central {
+  margin-bottom: 8em;
+  margin-left: 20%;
+  margin-right: 20%;
+}
+.Card{
   display: flex;
   justify-content: center;
-  margin-bottom: 13%;
-}
-.NoDoubtPut {
-  display: flex;
-  justify-content: center;
-}
-.screenText {
-  font-size: 20px;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 .StayThere {
   margin-top: 3.25ex;
+}
+.PushTheButton{
+  margin-top: 20%;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 5em);
 }

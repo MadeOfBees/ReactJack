@@ -156,14 +156,14 @@ export default function MainApp() {
     return (
         <div >
             <Box sx={{ width: '100%' }}>
+                {!hasStarted ? <Button onClick={dealMeIn} className="PushTheButton">Deal Me In:</Button> : null}
+                {playerCards.length > 0 && computerCards.length > 0 ? <CardDisplay /> : null}
+                {playerCards.length > 0 && computerCards.length > 0 ?
+                    <div>
+                        {gameOver ? <Button onClick={dealMeIn}>NewGame</Button> : <Button onClick={hitMe}>Hit Me</Button>}
+                        <Button onClick={stay}>Stay</Button>
+                    </div> : null}
             </Box>
-            {!hasStarted ?  <Button onClick={dealMeIn}>Deal Me In:</Button> : null}
-            {playerCards.length > 0 && computerCards.length > 0 ? <CardDisplay /> : null}
-            {playerCards.length > 0 && computerCards.length > 0 ?
-                <div>
-                    {gameOver ? <Button onClick={dealMeIn}>NewGame</Button> : <Button onClick={hitMe}>Hit Me</Button>}
-                    <Button onClick={stay}>Stay</Button>
-                </div> : null}
         </div>
     );
 }

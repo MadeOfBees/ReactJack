@@ -48,7 +48,7 @@ function PlayCard(cardData) {
                             <Grid item>
                                 {array.slice(0, 5)}
                             </Grid>
-                            <Grid item className="Central">
+                            <Grid item className="Card">
                                 {array.slice(5, array.length)}
                             </Grid>
                         </Grid>
