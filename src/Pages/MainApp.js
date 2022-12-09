@@ -153,7 +153,6 @@ export default function MainApp() {
         setFlipEm(true);
     }
 
-
     return (
         <div >
             <Box sx={{ width: '100%' }}>
@@ -161,8 +160,8 @@ export default function MainApp() {
                 {playerCards.length > 0 && computerCards.length > 0 ? <CardDisplay /> : null}
                 {playerCards.length > 0 && computerCards.length > 0 ?
                     <div>
-                        {gameOver ? <Button onClick={dealMeIn}>NewGame</Button> : <Button onClick={hitMe}>Hit Me</Button>}
-                        <Button onClick={stay}>Stay</Button>
+                        {gameOver ? <Button onClick={dealMeIn}>New Game</Button> : <Button onClick={hitMe}>Hit Me</Button>}
+                        {gameOver ? <Button onClick={stay}>Score</Button> : <Button onClick={stay}>Stay</Button>}
                     </div> : null}
             </Box>
         </div>
