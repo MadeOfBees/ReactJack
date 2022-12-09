@@ -61,6 +61,7 @@ export default function MainApp() {
     const [playerCards, setPlayerCards] = React.useState([]);
     const [computerCards, setComputerCards] = React.useState([]);
     const [currentDeck, setCurrentDeck] = React.useState([]);
+    
     function dealMeIn() {
         let newDeck = deck;
         let card1 = newDeck[Math.floor(Math.random() * newDeck.length)];
@@ -106,7 +107,7 @@ export default function MainApp() {
         }
         return score;
     }
-    
+
     function computerScore() {
         let score = 0;
         computerCards.forEach(card => {
@@ -122,6 +123,28 @@ export default function MainApp() {
         });
         if (score > 21) {
             computerCards.forEach(card => {
+                if (card.Value === 'Ace') {
+                    score -= 10;
+                }
+            });
+        }
+        return score;
+    }
+    function fastComputerScore(cCards) {
+        let score = 0;
+        cCards.forEach(card => {
+            if (card.Value === 'Ace') {
+                score += 11;
+            }
+            else if (card.Value === 'Jack' || card.Value === 'Queen' || card.Value === 'King') {
+                score += 10;
+            }
+            else {
+                score += parseInt(card.Value);
+            }
+        });
+        if (score > 21) {
+            cCards.forEach(card => {
                 if (card.Value === 'Ace') {
                     score -= 10;
                 }
@@ -158,43 +181,51 @@ export default function MainApp() {
     }
     function stay() {
         if (playerScore() <= 21) {
-            if (computerScore() < 17) {computersTurn()}}
-        else {
+            computersTurn();
+        } else {
             alert(`You Lose! player score was ${playerScore()} and computer score was ${computerScore()}`);
         }
     }
 
     function computersTurn() {
-        let newDeck = currentDeck;
-        let newCard = newDeck[Math.floor(Math.random() * newDeck.length)];
-        newDeck = newDeck.filter(function (obj) {
-            return obj !== newCard;
-        });
-        setCurrentDeck(newDeck);
-        setComputerCards([...computerCards, newCard]);
-        if (computerScore() > 21) {
-            alert(`You Win! player score was ${playerScore()} and computer score was ${computerScore()}`);
-        } else {
-            if (playerScore() > computerScore()) {
-                alert(`You Win! player score was ${playerScore()} and computer score was ${computerScore()}`);
+        let fastCards = computerCards;
+        turn(fastCards);
+        function turn(fastCards) {
+            while (fastComputerScore(fastCards) < 17) {
+                let newDeck = currentDeck;
+                let newCard = newDeck[Math.floor(Math.random() * newDeck.length)];
+                newDeck = newDeck.filter(function (obj) {
+                    return obj !== newCard;
+                });
+                setCurrentDeck(newDeck);
+                fastCards = [...fastCards, newCard];
             }
-            else if (playerScore() <= computerScore()) {
-                alert(`You Lose! player score was ${playerScore()} and computer score was ${computerScore()}`);
-            }
+                endGame(fastCards);
         }
     }
+        function endGame(fastCards) {
+            if (fastComputerScore(fastCards) > 21) {
+                alert(`You Win! player score was ${playerScore()} and computer score was ${fastComputerScore(fastCards)}`);
+            }
+            else if (fastComputerScore(fastCards) >= playerScore()) {
+                alert(`You Lose! player score was ${playerScore()} and computer score was ${fastComputerScore(fastCards)}`);
+            }
+            else if (fastComputerScore(fastCards) < playerScore()) {
+                alert(`You Win! player score was ${playerScore()} and computer score was ${fastComputerScore(fastCards)}`);
+            }
+        }
 
-    return (
-        <div>
-            <Box sx={{ width: '100%' }}>
-            </Box>
-            <Button onClick={dealMeIn}>MAIN BUTTON</Button>
-            {playerCards.length > 0 && computerCards.length > 0 ? <CardDisply player={playerCards} computer={computerCards} /> : null}
-            {playerCards.length > 0 && computerCards.length > 0 ?
-                <div>
-                    <Button onClick={hitMe}>HitMe</Button>
-                    <Button onClick={stay}>Stay</Button>
-                </div> : null}
-        </div>
-    );
-}
+        return (
+            <div>
+                <Box sx={{ width: '100%' }}>
+                </Box>
+                <Button onClick={dealMeIn}>MAIN BUTTON</Button>
+                {playerCards.length > 0 && computerCards.length > 0 ? <CardDisply player={playerCards} computer={computerCards} /> : null}
+                {playerCards.length > 0 && computerCards.length > 0 ?
+                    <div>
+                        <Button onClick={hitMe}>HitMe</Button>
+                        <Button onClick={stay}>Stay</Button>
+                    </div> : null}
+            </div>
+        );
+    }
