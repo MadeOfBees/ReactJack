@@ -22,8 +22,11 @@ export default function MainApp() {
     const [computerCards, setComputerCards] = React.useState([]);
     const [currentDeck, setCurrentDeck] = React.useState([]);
     const [flipEm, setFlipEm] = React.useState(false);
+    const [gameOver, setGameOver] = React.useState(false);
+    const [hasStarted, setHasStarted] = React.useState(false);
 
     function dealMeIn() {
+        setHasStarted(true);
         setFlipEm(false);
         let newDeck = deck;
         let starterCards = [];
@@ -72,32 +75,32 @@ export default function MainApp() {
             <div>
                 <h1>Player Cards:</h1>
                 <Grid container spacing={cSpace}>
-                    {playerCards.map((card, i) => <Grid key={i} item xs={1}><PlayCard cardData={card}/></Grid>)}
+                    {playerCards.map((card, i) => <Grid key={i} item xs={1}><PlayCard cardData={card} /></Grid>)}
                 </Grid>
                 <p>Score: {calcScore(playerCards)}</p>
                 <h1>Computer Cards:</h1>
                 <Grid container spacing={cSpace}>
-                    {hiddenCards.map((card, i) => <Grid key={i} item xs={1}><PlayCard cardData={card}/></Grid>)}
+                    {hiddenCards.map((card, i) => <Grid key={i} item xs={1}><PlayCard cardData={card} /></Grid>)}
                 </Grid>
             </div>
         );
     }
 
     function hitMe() {
-            let newDeck = currentDeck;
-            let newCard = newDeck[Math.floor(Math.random() * newDeck.length)];
-            newDeck = newDeck.filter(function (obj) {
-                return obj !== newCard;
-            });
-            setCurrentDeck(newDeck);
-            setPlayerCards([...playerCards, newCard]);
-            var currentCards = [...playerCards, newCard];
+        let newDeck = currentDeck;
+        let newCard = newDeck[Math.floor(Math.random() * newDeck.length)];
+        newDeck = newDeck.filter(function (obj) {
+            return obj !== newCard;
+        });
+        setCurrentDeck(newDeck);
+        setPlayerCards([...playerCards, newCard]);
+        var currentCards = [...playerCards, newCard];
         if (calcScore(currentCards) > 21) {
-            setFlipEm(true);
+            endGame();
             alert(`You went over 21 with ${calcScore(currentCards)} the computer had ${calcScore(computerCards)}. You Lose!`);
         }
         if (currentCards.length === 5 && calcScore(currentCards) <= 21) {
-            setFlipEm(true);
+            endGame();
             alert(`You got up to 5 cards without going over 21, your score was ${calcScore(currentCards)} and the computer had ${calcScore(computerCards)}. You Win!`);
         }
     }
@@ -106,7 +109,7 @@ export default function MainApp() {
         if (calcScore(playerCards) <= 21) {
             computersTurn();
         } else {
-            setFlipEm(true);
+            endGame();
             alert(`You had ${calcScore(playerCards)} but the computer had ${calcScore(computerCards)}. You Lose!`);
         }
     }
@@ -124,35 +127,41 @@ export default function MainApp() {
                 setCurrentDeck(newDeck);
                 fastCards = [...fastCards, newCard];
             }
-            endGame(fastCards);
+            endings(fastCards);
         }
     }
 
-    function endGame(fastCards) {
+    function endings(fastCards) {
         setComputerCards(fastCards);
         if (calcScore(fastCards) > 21) {
-            setFlipEm(true);
+            endGame();
             alert(`You had ${calcScore(playerCards)} and the computer had ${calcScore(fastCards)}. You Win!`);
         }
         else if (calcScore(fastCards) >= calcScore(playerCards)) {
-            setFlipEm(true);
+            endGame();
             alert(`You had ${calcScore(playerCards)} and the computer had ${calcScore(fastCards)}. You Lose!`);
         }
         else if (calcScore(fastCards) < calcScore(playerCards)) {
-            setFlipEm(true);
+            endGame();
             alert(`You had ${calcScore(playerCards)} and the computer had ${calcScore(fastCards)}. You Win!`);
         }
     }
+
+    function endGame() {
+        setGameOver(true);
+        setFlipEm(true);
+    }
+
 
     return (
         <div >
             <Box sx={{ width: '100%' }}>
             </Box>
-            <Button onClick={dealMeIn}>Deal Me In:</Button>
+            {!hasStarted ?  <Button onClick={dealMeIn}>Deal Me In:</Button> : null}
             {playerCards.length > 0 && computerCards.length > 0 ? <CardDisplay /> : null}
             {playerCards.length > 0 && computerCards.length > 0 ?
                 <div>
-                    <Button onClick={hitMe}>Hit Me</Button>
+                    {gameOver ? <Button onClick={dealMeIn}>NewGame</Button> : <Button onClick={hitMe}>Hit Me</Button>}
                     <Button onClick={stay}>Stay</Button>
                 </div> : null}
         </div>
