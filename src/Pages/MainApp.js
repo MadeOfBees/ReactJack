@@ -1,6 +1,8 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import { Grid } from '@mui/material';
+import PlayCard from '../Components/PlayCard';
 
 export default function MainApp() {
     const deck = [];
@@ -55,17 +57,20 @@ export default function MainApp() {
         return score;
     }
 
-    function makeCardReadbable(card) { return card.Value + " of " + card.Suit; }
-
     function CardDisplay() {
-        let displayedComputerCards = computerCards.slice(1);
+        let displayedComputerCards = computerCards;
+        displayedComputerCards[0] = { Value: 'Hidden', Suit: 'Card' };
         return (
             <div>
                 <h1>Player Cards:</h1>
-                {playerCards.map(card => <p>{makeCardReadbable(card)}</p>)}
+                <Grid container spacing={6}>
+                    {playerCards.map((card, i) => <Grid key={i} item xs={1}><PlayCard cardData={card}/></Grid>)}
+                </Grid>
+                <p>Score: {calcScore(playerCards)}</p>
                 <h1>Computer Cards:</h1>
-                <p>Hidden Card</p>
-                {displayedComputerCards.map(card => <p>{makeCardReadbable(card)}</p>)}
+                <Grid container spacing={6}>
+                    {displayedComputerCards.map((card, i) => <Grid key={i} item xs={1}><PlayCard cardData={card}/></Grid>)}
+                </Grid>
             </div>
         );
     }
@@ -117,7 +122,7 @@ export default function MainApp() {
             alert(`You had ${calcScore(playerCards)} and the computer had ${calcScore(fastCards)}. You Win!`);
         }
     }
-    
+
     return (
         <div>
             <Box sx={{ width: '100%' }}>
