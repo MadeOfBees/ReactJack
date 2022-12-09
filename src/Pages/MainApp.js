@@ -61,7 +61,6 @@ export default function MainApp() {
     const [playerCards, setPlayerCards] = React.useState([]);
     const [computerCards, setComputerCards] = React.useState([]);
     const [currentDeck, setCurrentDeck] = React.useState([]);
-    
     function dealMeIn() {
         let newDeck = deck;
         let card1 = newDeck[Math.floor(Math.random() * newDeck.length)];
@@ -84,7 +83,6 @@ export default function MainApp() {
         setPlayerCards([card1, card3]);
         setComputerCards([card2, card4]);
     }
-
     function playerScore() {
         let score = 0;
         playerCards.forEach(card => {
@@ -100,29 +98,6 @@ export default function MainApp() {
         });
         if (score > 21) {
             playerCards.forEach(card => {
-                if (card.Value === 'Ace') {
-                    score -= 10;
-                }
-            });
-        }
-        return score;
-    }
-
-    function computerScore() {
-        let score = 0;
-        computerCards.forEach(card => {
-            if (card.Value === 'Ace') {
-                score += 11;
-            }
-            else if (card.Value === 'Jack' || card.Value === 'Queen' || card.Value === 'King') {
-                score += 10;
-            }
-            else {
-                score += parseInt(card.Value);
-            }
-        });
-        if (score > 21) {
-            computerCards.forEach(card => {
                 if (card.Value === 'Ace') {
                     score -= 10;
                 }
@@ -152,7 +127,6 @@ export default function MainApp() {
         }
         return score;
     }
-
     function CardDisply(props) {
         function makeCardReadbable(card) { return card.Value + " of " + card.Suit; }
         return (
@@ -183,7 +157,7 @@ export default function MainApp() {
         if (playerScore() <= 21) {
             computersTurn();
         } else {
-            alert(`You Lose! player score was ${playerScore()} and computer score was ${computerScore()}`);
+            alert(`You had ${playerScore()} but the computer had ${fastComputerScore(computerCards)}. You Lose!`);
         }
     }
 
@@ -200,32 +174,31 @@ export default function MainApp() {
                 setCurrentDeck(newDeck);
                 fastCards = [...fastCards, newCard];
             }
-                endGame(fastCards);
+            endGame(fastCards);
         }
     }
-        function endGame(fastCards) {
-            if (fastComputerScore(fastCards) > 21) {
-                alert(`You Win! player score was ${playerScore()} and computer score was ${fastComputerScore(fastCards)}`);
-            }
-            else if (fastComputerScore(fastCards) >= playerScore()) {
-                alert(`You Lose! player score was ${playerScore()} and computer score was ${fastComputerScore(fastCards)}`);
-            }
-            else if (fastComputerScore(fastCards) < playerScore()) {
-                alert(`You Win! player score was ${playerScore()} and computer score was ${fastComputerScore(fastCards)}`);
-            }
+    function endGame(fastCards) {
+        if (fastComputerScore(fastCards) > 21) {
+            alert(`You had ${playerScore()} and the computer had ${fastComputerScore(fastCards)}. You Win!`);
         }
-
-        return (
-            <div>
-                <Box sx={{ width: '100%' }}>
-                </Box>
-                <Button onClick={dealMeIn}>MAIN BUTTON</Button>
-                {playerCards.length > 0 && computerCards.length > 0 ? <CardDisply player={playerCards} computer={computerCards} /> : null}
-                {playerCards.length > 0 && computerCards.length > 0 ?
-                    <div>
-                        <Button onClick={hitMe}>HitMe</Button>
-                        <Button onClick={stay}>Stay</Button>
-                    </div> : null}
-            </div>
-        );
+        else if (fastComputerScore(fastCards) >= playerScore()) {
+            alert(`You had ${playerScore()} and the computer had ${fastComputerScore(fastCards)}. You Lose!`);
+        }
+        else if (fastComputerScore(fastCards) < playerScore()) {
+            alert(`You had ${playerScore()} and the computer had ${fastComputerScore(fastCards)}. You Win!`);
+        }
     }
+    return (
+        <div>
+            <Box sx={{ width: '100%' }}>
+            </Box>
+            <Button onClick={dealMeIn}>MAIN BUTTON</Button>
+            {playerCards.length > 0 && computerCards.length > 0 ? <CardDisply player={playerCards} computer={computerCards} /> : null}
+            {playerCards.length > 0 && computerCards.length > 0 ?
+                <div>
+                    <Button onClick={hitMe}>HitMe</Button>
+                    <Button onClick={stay}>Stay</Button>
+                </div> : null}
+        </div>
+    );
+}
