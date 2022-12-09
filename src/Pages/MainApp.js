@@ -1,78 +1,90 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
-import Stack from '@mui/material/Stack';
-import { styled } from '@mui/material/styles';
-import Input from '@mui/material/Input';
-import Backdrop from '@mui/material/Backdrop';
-import Modal from '@mui/material/Modal';
-import Fade from '@mui/material/Fade';
-import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 
-const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-}));
-
-const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-};
+const deck = [
+    {Suit: 'Hearts', Value: 'Ace'},
+    {Suit: 'Hearts', Value: '2'},
+    {Suit: 'Hearts', Value: '3'},
+    {Suit: 'Hearts', Value: '4'},
+    {Suit: 'Hearts', Value: '5'},
+    {Suit: 'Hearts', Value: '6'},
+    {Suit: 'Hearts', Value: '7'},
+    {Suit: 'Hearts', Value: '8'},
+    {Suit: 'Hearts', Value: '9'},
+    {Suit: 'Hearts', Value: '10'},
+    {Suit: 'Hearts', Value: 'Jack'},
+    {Suit: 'Hearts', Value: 'Queen'},
+    {Suit: 'Hearts', Value: 'King'},
+    {Suit: 'Spades', Value: 'Ace'},
+    {Suit: 'Spades', Value: '2'},
+    {Suit: 'Spades', Value: '3'},
+    {Suit: 'Spades', Value: '4'},
+    {Suit: 'Spades', Value: '5'},
+    {Suit: 'Spades', Value: '6'},
+    {Suit: 'Spades', Value: '7'},
+    {Suit: 'Spades', Value: '8'},
+    {Suit: 'Spades', Value: '9'},
+    {Suit: 'Spades', Value: '10'},
+    {Suit: 'Spades', Value: 'Jack'},
+    {Suit: 'Spades', Value: 'Queen'},
+    {Suit: 'Spades', Value: 'King'},
+    {Suit: 'Diamonds', Value: 'Ace'},
+    {Suit: 'Diamonds', Value: '2'},
+    {Suit: 'Diamonds', Value: '3'},
+    {Suit: 'Diamonds', Value: '4'},
+    {Suit: 'Diamonds', Value: '5'},
+    {Suit: 'Diamonds', Value: '6'},
+    {Suit: 'Diamonds', Value: '7'},
+    {Suit: 'Diamonds', Value: '8'},
+    {Suit: 'Diamonds', Value: '9'},
+    {Suit: 'Diamonds', Value: '10'},
+    {Suit: 'Diamonds', Value: 'Jack'},
+    {Suit: 'Diamonds', Value: 'Queen'},
+    {Suit: 'Diamonds', Value: 'King'},
+    {Suit: 'Clubs', Value: 'Ace'},
+    {Suit: 'Clubs', Value: '2'},
+    {Suit: 'Clubs', Value: '3'},
+    {Suit: 'Clubs', Value: '4'},
+    {Suit: 'Clubs', Value: '5'},
+    {Suit: 'Clubs', Value: '6'},
+    {Suit: 'Clubs', Value: '7'},
+    {Suit: 'Clubs', Value: '8'},
+    {Suit: 'Clubs', Value: '9'},
+    {Suit: 'Clubs', Value: '10'},
+    {Suit: 'Clubs', Value: 'Jack'},
+    {Suit: 'Clubs', Value: 'Queen'},
+    {Suit: 'Clubs', Value: 'King'}
+]
 
 function MainApp() {
-    const [open, setOpen] = React.useState(false);
-    const handleClose = () => setOpen(false);
-    const [output, setOutput] = React.useState();
-    const [input, setInput] = React.useState();
-
-    function logic() {
-
+    function dealMeIn() {
+        let newDeck = deck;
+        let card1 = newDeck[Math.floor(Math.random() * newDeck.length)];
+        newDeck = newDeck.filter(function (obj) {
+            return obj !== card1;
+        });
+        let card2 = newDeck[Math.floor(Math.random() * newDeck.length)];
+        newDeck = newDeck.filter(function (obj) {
+            return obj !== card2;
+        });
+        let card3 = newDeck[Math.floor(Math.random() * newDeck.length)];
+        newDeck = newDeck.filter(function (obj) {
+            return obj !== card3;
+        });
+        let card4 = newDeck[Math.floor(Math.random() * newDeck.length)];
+        newDeck = newDeck.filter(function (obj) {
+            return obj !== card4;
+        });
+        console.log(` ${card1.Value} of ${card1.Suit}, ${card2.Value} of ${card2.Suit}, ${card3.Value} of ${card3.Suit}, ${card4.Value} of ${card4.Suit} `);
+        console.log(newDeck);
     }
 
     return (
         <div>
-            <h1>INPUT HERE:</h1>
             <Box sx={{ width: '100%' }}>
-                <Stack spacing={2} className="NoDoubtPut">
-                    <Item className="screenText">
-                        <Input></Input>
-                        <Item><Button onClick={logic}>MAIN BUTTON</Button></Item>
-                    </Item>
-                </Stack>
             </Box>
-            <Modal
-                aria-labelledby="transition-modal-title"
-                aria-describedby="transition-modal-description"
-                open={open}
-                onClose={handleClose}
-                closeAfterTransition
-                BackdropComponent={Backdrop}
-                BackdropProps={{
-                    timeout: 500,
-                }}
-            >
-                <Fade in={open}>
-                    <Box sx={style}>
-                        <Typography id="transition-modal-title" variant="h6" component="h2">
-                            We have chosen:
-                        </Typography>
-                        <Typography id="modal-modal-description" className='NoCont'>
-                            {output}
-                        </Typography>
-                    </Box>
-                </Fade>
-            </Modal>
+            <Button onClick={dealMeIn}>MAIN BUTTON</Button>
         </div>
     );
 }

@@ -1,6 +1,6 @@
 {
-  "name": "material-io",
-  "homepage": "https://MadeOfBees.github.io/material-io",
+  "name": "react-jack",
+  "homepage": "https://MadeOfBees.github.io/ReactJack",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

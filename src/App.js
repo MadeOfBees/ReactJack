@@ -35,6 +35,10 @@ function App() {
               element={<Home />}
             />
             <Route
+              path="/ReactJack"
+              element={<Home />}
+            />
+            <Route
               path="/AboutUs"
               element={<AboutUs />}
             />
