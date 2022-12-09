@@ -26,6 +26,7 @@ export default function MainApp() {
     const [hasStarted, setHasStarted] = React.useState(false);
 
     function dealMeIn() {
+        setGameOver(false);
         setHasStarted(true);
         setFlipEm(false);
         let newDeck = deck;
