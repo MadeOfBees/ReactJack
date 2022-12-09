@@ -69,12 +69,12 @@ export default function MainApp() {
         }
         return (
             <div>
-                <h1>Player Cards:</h1>
+                <h3>Player Cards:</h3>
                 <Grid container spacing={cSpace}>
                     {playerCards.map((card, i) => <Grid key={i} item xs={1}><PlayCard cardData={card}/></Grid>)}
                 </Grid>
                 <p>Score: {calcScore(playerCards)}</p>
-                <h1>Computer Cards:</h1>
+                <h3>Computer Cards:</h3>
                 <Grid container spacing={cSpace}>
                     {hiddenCards.map((card, i) => <Grid key={i} item xs={1}><PlayCard cardData={card}/></Grid>)}
                 </Grid>

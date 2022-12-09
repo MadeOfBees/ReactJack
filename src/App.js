@@ -11,6 +11,8 @@ import ToggleOffIcon from '@mui/icons-material/ToggleOff';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme, createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
+import Paper from '@mui/material/Paper';
+
 
 
 const ColorModeContext = React.createContext({ toggleColorMode: () => { } });
@@ -25,7 +27,7 @@ function App() {
       <CssBaseline />
       <Router>
         <div className="Central">
-          <Routes className="Central">
+          <Routes>
             <Route
               path="/Home"
               element={<Home />}
@@ -44,11 +46,13 @@ function App() {
             />
           </Routes>
         </div>
-        <BottomNavigation showLabels className='DownNav'>
+        <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 30 }} elevation={3}>
+        <BottomNavigation showLabels>
           <BottomNavigationAction component={Link} to="/AboutUs" label="About us" icon={<ContactPageIcon />} />
           <BottomNavigationAction component={Link} to="/Home" label="Home" icon={<HomeIcon />} />
           <BottomNavigationAction onClick={colorMode.toggleColorMode} label=" Toggle Darkmode" icon={theme.palette.mode === 'dark' ? <ToggleOffIcon /> : <ToggleOnIcon />} />
         </BottomNavigation>
+        </Paper>
       </Router>
     </div>
   );
