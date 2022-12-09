@@ -23,6 +23,7 @@ function PlayCard(cardData) {
             break;
         default:
             suit = "";
+            color = "black";
             break;
     }
     function isFace() {

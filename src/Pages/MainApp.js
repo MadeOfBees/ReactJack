@@ -83,13 +83,22 @@ export default function MainApp() {
     }
 
     function hitMe() {
-        let newDeck = currentDeck;
-        let newCard = newDeck[Math.floor(Math.random() * newDeck.length)];
-        newDeck = newDeck.filter(function (obj) {
-            return obj !== newCard;
-        });
-        setCurrentDeck(newDeck);
-        setPlayerCards([...playerCards, newCard]);
+            let newDeck = currentDeck;
+            let newCard = newDeck[Math.floor(Math.random() * newDeck.length)];
+            newDeck = newDeck.filter(function (obj) {
+                return obj !== newCard;
+            });
+            setCurrentDeck(newDeck);
+            setPlayerCards([...playerCards, newCard]);
+            var currentCards = [...playerCards, newCard];
+        if (calcScore(currentCards) > 21) {
+            setFlipEm(true);
+            alert(`You went over 21 with ${calcScore(currentCards)} the computer had ${calcScore(computerCards)}. You Lose!`);
+        }
+        if (currentCards.length === 5 && calcScore(currentCards) <= 21) {
+            setFlipEm(true);
+            alert(`You got up to 5 cards without going over 21, your score was ${calcScore(currentCards)} and the computer had ${calcScore(computerCards)}. You Win!`);
+        }
     }
 
     function stay() {
@@ -135,7 +144,7 @@ export default function MainApp() {
     }
 
     return (
-        <div>
+        <div >
             <Box sx={{ width: '100%' }}>
             </Box>
             <Button onClick={dealMeIn}>Deal Me In:</Button>
