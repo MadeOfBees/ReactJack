@@ -24,6 +24,7 @@ export default function MainApp() {
     const [flipEm, setFlipEm] = React.useState(false);
 
     function dealMeIn() {
+        setFlipEm(false);
         let newDeck = deck;
         let starterCards = [];
         for (let i = 0; i < 4; i++) {
