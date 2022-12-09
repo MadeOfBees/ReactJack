@@ -59,7 +59,6 @@ function PlayCard(cardData) {
     }
     if (!isFace()) {
         return (
-            // if isRed is true, then the card is red set color to red
             <Box sx={{ width: 100, height: 160, backgroundColor: "#fffde7", color:{color}}}>
                 <Grid container direction="row" justifyContent="space-around" height={10}>
                     <Grid item>
@@ -94,16 +93,14 @@ function PlayCard(cardData) {
         );
     } else {
         return (
-            <Box sx={{ width: 100, height: 160, backgroundColor: "#fffde7", color: "#000000" }}>
+            <Box sx={{ width: 100, height: 160, backgroundColor: "#fffde7", color:{color}}}>
                 <Grid container direction="row" justifyContent="space-around">
                     <Grid item>
                         <h1 className='StayThere'>{value}{suit}</h1>
                     </Grid>
                 </Grid>
             </Box>
-
         );
-
     }
 }
 
