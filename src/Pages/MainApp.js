@@ -14,6 +14,7 @@ export default function MainApp() {
         deck.push({ Value: 'Queen', Suit: suits[i] });
         deck.push({ Value: 'King', Suit: suits[i] });
     }
+
     const [playerCards, setPlayerCards] = React.useState([]);
     const [computerCards, setComputerCards] = React.useState([]);
     const [currentDeck, setCurrentDeck] = React.useState([]);
@@ -30,6 +31,7 @@ export default function MainApp() {
         setPlayerCards([starterCards[0], starterCards[2]]);
         setComputerCards([starterCards[1], starterCards[3]]);
     }
+
     function calcScore(inputCards) {
         let score = 0;
         inputCards.forEach(card => {
@@ -52,7 +54,9 @@ export default function MainApp() {
         }
         return score;
     }
+
     function makeCardReadbable(card) { return card.Value + " of " + card.Suit; }
+
     function CardDisplay() {
         let displayedComputerCards = computerCards.slice(1);
         return (
@@ -75,6 +79,7 @@ export default function MainApp() {
         setCurrentDeck(newDeck);
         setPlayerCards([...playerCards, newCard]);
     }
+
     function stay() {
         if (calcScore(playerCards) <= 21) {
             computersTurn();
@@ -99,6 +104,7 @@ export default function MainApp() {
             endGame(fastCards);
         }
     }
+
     function endGame(fastCards) {
         setComputerCards(fastCards);
         if (calcScore(fastCards) > 21) {
@@ -111,6 +117,7 @@ export default function MainApp() {
             alert(`You had ${calcScore(playerCards)} and the computer had ${calcScore(fastCards)}. You Win!`);
         }
     }
+    
     return (
         <div>
             <Box sx={{ width: '100%' }}>
