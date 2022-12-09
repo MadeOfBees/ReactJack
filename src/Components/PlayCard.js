@@ -25,10 +25,36 @@ function PlayCard(cardData) {
             break;
     }
 
+    function MiddleOutput() {
+        const array = [];
+        if (value === "A" || value === "J" || value === "Q" || value === "K"|| value === "?") {
+            return <h3>{value}</h3>
+        }
+        else {
+            for (let i = 0; i < parseInt(value); i++) {
+                array.push(suit);
+            }
+            if (array.length > 5) {
+                return (
+                    <div>
+                        <Grid >
+                            <Grid item>
+                                {array.slice(0, 5)}
+                            </Grid>
+                            <Grid item className='Central'>
+                                {array.slice(5, array.length)}
+                            </Grid>
+                        </Grid>
+                    </div>
+                )
+            }
+            return array
+        }
+    }
 
     return (
-        <Box sx={{ width: 100, height: 150, backgroundColor: "#fffde7", color: "#000000" }}>
-            <Grid container direction="row" justifyContent="space-around" sx={{ height: 40 }}>
+        <Box sx={{ width: 100, height: 160, backgroundColor: "#fffde7", color: "#000000" }}>
+            <Grid container direction="row" justifyContent="space-around" height={10}>
                 <Grid item>
                     <p>
                         {value}
@@ -39,16 +65,12 @@ function PlayCard(cardData) {
                         {suit}
                     </p>
                 </Grid>
-
-                
-                <Grid container direction="row" justifyContent="center" sx={{ height: 40 }}>
-                    <Grid item>
-                        {parseInt(value) ? <p>{suit.repeat(parseInt(value))}</p> : <p>{value}</p>}
+                <Grid container direction="row" justifyContent="center" height={50}>
+                    <Grid item justifyContent="center">
+                        <MiddleOutput />
                     </Grid>
                 </Grid>
-
-
-                <Grid container direction="row" justifyContent="space-around" sx={{ height: 40 }}>
+                <Grid container direction="row" justifyContent="space-around" height={25}>
                     <Grid item>
                         <p>
                             {suit}

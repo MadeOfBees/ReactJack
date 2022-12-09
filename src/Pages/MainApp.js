@@ -9,13 +9,13 @@ export default function MainApp() {
     const deck = [];
     const suits = ['Clubs', 'Diamonds', 'Hearts', 'Spades'];
     for (let i = 0; i < suits.length; i++) {
-        deck.push({ Value: 'Ace', Suit: suits[i] });
+        deck.push({ Value: 'A', Suit: suits[i] });
         for (let b = 2; b < 11; b++) {
             deck.push({ Value: b.toString(), Suit: suits[i] });
         }
-        deck.push({ Value: 'Jack', Suit: suits[i] });
-        deck.push({ Value: 'Queen', Suit: suits[i] });
-        deck.push({ Value: 'King', Suit: suits[i] });
+        deck.push({ Value: 'J', Suit: suits[i] });
+        deck.push({ Value: 'Q', Suit: suits[i] });
+        deck.push({ Value: 'K', Suit: suits[i] });
     }
 
     const [playerCards, setPlayerCards] = React.useState([]);
@@ -40,10 +40,10 @@ export default function MainApp() {
     function calcScore(inputCards) {
         let score = 0;
         inputCards.forEach(card => {
-            if (card.Value === 'Ace') {
+            if (card.Value === 'A') {
                 score += 11;
             }
-            else if (card.Value === 'Jack' || card.Value === 'Queen' || card.Value === 'King') {
+            else if (card.Value === 'J' || card.Value === 'Q' || card.Value === 'K') {
                 score += 10;
             }
             else {
@@ -52,7 +52,7 @@ export default function MainApp() {
         });
         if (score > 21) {
             inputCards.forEach(card => {
-                if (card.Value === 'Ace') {
+                if (card.Value === 'A') {
                     score -= 10;
                 }
             });
