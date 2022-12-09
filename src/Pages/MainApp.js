@@ -2,86 +2,33 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 
-const deck = [
-    { Suit: 'Hearts', Value: 'Ace' },
-    { Suit: 'Hearts', Value: '2' },
-    { Suit: 'Hearts', Value: '3' },
-    { Suit: 'Hearts', Value: '4' },
-    { Suit: 'Hearts', Value: '5' },
-    { Suit: 'Hearts', Value: '6' },
-    { Suit: 'Hearts', Value: '7' },
-    { Suit: 'Hearts', Value: '8' },
-    { Suit: 'Hearts', Value: '9' },
-    { Suit: 'Hearts', Value: '10' },
-    { Suit: 'Hearts', Value: 'Jack' },
-    { Suit: 'Hearts', Value: 'Queen' },
-    { Suit: 'Hearts', Value: 'King' },
-    { Suit: 'Spades', Value: 'Ace' },
-    { Suit: 'Spades', Value: '2' },
-    { Suit: 'Spades', Value: '3' },
-    { Suit: 'Spades', Value: '4' },
-    { Suit: 'Spades', Value: '5' },
-    { Suit: 'Spades', Value: '6' },
-    { Suit: 'Spades', Value: '7' },
-    { Suit: 'Spades', Value: '8' },
-    { Suit: 'Spades', Value: '9' },
-    { Suit: 'Spades', Value: '10' },
-    { Suit: 'Spades', Value: 'Jack' },
-    { Suit: 'Spades', Value: 'Queen' },
-    { Suit: 'Spades', Value: 'King' },
-    { Suit: 'Diamonds', Value: 'Ace' },
-    { Suit: 'Diamonds', Value: '2' },
-    { Suit: 'Diamonds', Value: '3' },
-    { Suit: 'Diamonds', Value: '4' },
-    { Suit: 'Diamonds', Value: '5' },
-    { Suit: 'Diamonds', Value: '6' },
-    { Suit: 'Diamonds', Value: '7' },
-    { Suit: 'Diamonds', Value: '8' },
-    { Suit: 'Diamonds', Value: '9' },
-    { Suit: 'Diamonds', Value: '10' },
-    { Suit: 'Diamonds', Value: 'Jack' },
-    { Suit: 'Diamonds', Value: 'Queen' },
-    { Suit: 'Diamonds', Value: 'King' },
-    { Suit: 'Clubs', Value: 'Ace' },
-    { Suit: 'Clubs', Value: '2' },
-    { Suit: 'Clubs', Value: '3' },
-    { Suit: 'Clubs', Value: '4' },
-    { Suit: 'Clubs', Value: '5' },
-    { Suit: 'Clubs', Value: '6' },
-    { Suit: 'Clubs', Value: '7' },
-    { Suit: 'Clubs', Value: '8' },
-    { Suit: 'Clubs', Value: '9' },
-    { Suit: 'Clubs', Value: '10' },
-    { Suit: 'Clubs', Value: 'Jack' },
-    { Suit: 'Clubs', Value: 'Queen' },
-    { Suit: 'Clubs', Value: 'King' }
-]
-
 export default function MainApp() {
+    const deck = [];
+    const suits = ['Hearts', 'Diamonds', 'Spades', 'Clubs'];
+    for (let i = 0; i < suits.length; i++) {
+        deck.push({ Value: 'Ace', Suit: suits[i] });
+        for (let b = 2; b < 11; b++) {
+            deck.push({ Value: b.toString(), Suit: suits[i] });
+        }
+        deck.push({ Value: 'Jack', Suit: suits[i] });
+        deck.push({ Value: 'Queen', Suit: suits[i] });
+        deck.push({ Value: 'King', Suit: suits[i] });
+    }
     const [playerCards, setPlayerCards] = React.useState([]);
     const [computerCards, setComputerCards] = React.useState([]);
     const [currentDeck, setCurrentDeck] = React.useState([]);
     function dealMeIn() {
         let newDeck = deck;
-        let card1 = newDeck[Math.floor(Math.random() * newDeck.length)];
-        newDeck = newDeck.filter(function (obj) {
-            return obj !== card1;
-        });
-        let card2 = newDeck[Math.floor(Math.random() * newDeck.length)];
-        newDeck = newDeck.filter(function (obj) {
-            return obj !== card2;
-        });
-        let card3 = newDeck[Math.floor(Math.random() * newDeck.length)];
-        newDeck = newDeck.filter(function (obj) {
-            return obj !== card3;
-        });
-        let card4 = newDeck[Math.floor(Math.random() * newDeck.length)];
-        newDeck = newDeck.filter(function (obj) {
-            return obj !== card4;
-        });
+        let starterCards = [];
+        for (let i = 0; i < 4; i++) {
+            starterCards[i] = newDeck[Math.floor(Math.random() * newDeck.length)];
+            newDeck = newDeck.filter(function (obj) {
+                return obj !== starterCards[i];
+            });
+        }
         setCurrentDeck(newDeck);
-        setPlayerCards([card1, card3]);
-        setComputerCards([card2, card4]);
+        setPlayerCards([starterCards[0], starterCards[2]]);
+        setComputerCards([starterCards[1], starterCards[3]]);
     }
     function calcScore(inputCards) {
         let score = 0;
@@ -107,16 +54,18 @@ export default function MainApp() {
     }
     function makeCardReadbable(card) { return card.Value + " of " + card.Suit; }
     function CardDisplay() {
+        let displayedComputerCards = computerCards.slice(1);
         return (
             <div>
-                <h1>Player Cards</h1>
+                <h1>Player Cards:</h1>
                 {playerCards.map(card => <p>{makeCardReadbable(card)}</p>)}
-                <h1>Computer Cards</h1>
-                {computerCards.map(card => <p>{makeCardReadbable(card)}</p>)}
+                <h1>Computer Cards:</h1>
+                <p>Hidden Card</p>
+                {displayedComputerCards.map(card => <p>{makeCardReadbable(card)}</p>)}
             </div>
         );
     }
-    
+
     function hitMe() {
         let newDeck = currentDeck;
         let newCard = newDeck[Math.floor(Math.random() * newDeck.length)];
@@ -166,7 +115,7 @@ export default function MainApp() {
         <div>
             <Box sx={{ width: '100%' }}>
             </Box>
-            <Button onClick={dealMeIn}>MAIN BUTTON</Button>
+            <Button onClick={dealMeIn}>Deal Me In:</Button>
             {playerCards.length > 0 && computerCards.length > 0 ? <CardDisplay /> : null}
             {playerCards.length > 0 && computerCards.length > 0 ?
                 <div>
