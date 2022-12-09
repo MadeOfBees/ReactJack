@@ -46,7 +46,7 @@ function App() {
             />
           </Routes>
         </div>
-        <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 20}} elevation={3}>
+        <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0}} elevation={3}>
         <BottomNavigation showLabels>
           <BottomNavigationAction component={Link} to="/AboutUs" label="About us" icon={<ContactPageIcon />} />
           <BottomNavigationAction component={Link} to="/Home" label="Home" icon={<HomeIcon />} />
