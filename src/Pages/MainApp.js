@@ -5,8 +5,9 @@ import { Grid } from '@mui/material';
 import PlayCard from '../Components/PlayCard';
 
 export default function MainApp() {
+    const cSpace = 13;
     const deck = [];
-    const suits = ['Hearts', 'Diamonds', 'Spades', 'Clubs'];
+    const suits = ['Clubs', 'Diamonds', 'Hearts', 'Spades'];
     for (let i = 0; i < suits.length; i++) {
         deck.push({ Value: 'Ace', Suit: suits[i] });
         for (let b = 2; b < 11; b++) {
@@ -60,21 +61,21 @@ export default function MainApp() {
     }
 
     function CardDisplay() {
-        let hiddenCards = computerCards;
+        let hiddenCards = [];
         if (flipEm) {
             hiddenCards = computerCards;
         } else {
-            hiddenCards = [{ Value: 'Hidden', Suit: 'Hidden' }, computerCards[0]];
+            hiddenCards = [{ Value: '?', Suit: '?' }, computerCards[0]];
         }
         return (
             <div>
                 <h1>Player Cards:</h1>
-                <Grid container spacing={6}>
+                <Grid container spacing={cSpace}>
                     {playerCards.map((card, i) => <Grid key={i} item xs={1}><PlayCard cardData={card}/></Grid>)}
                 </Grid>
                 <p>Score: {calcScore(playerCards)}</p>
                 <h1>Computer Cards:</h1>
-                <Grid container spacing={6}>
+                <Grid container spacing={cSpace}>
                     {hiddenCards.map((card, i) => <Grid key={i} item xs={1}><PlayCard cardData={card}/></Grid>)}
                 </Grid>
             </div>
@@ -141,7 +142,7 @@ export default function MainApp() {
             {playerCards.length > 0 && computerCards.length > 0 ? <CardDisplay /> : null}
             {playerCards.length > 0 && computerCards.length > 0 ?
                 <div>
-                    <Button onClick={hitMe}>HitMe</Button>
+                    <Button onClick={hitMe}>Hit Me</Button>
                     <Button onClick={stay}>Stay</Button>
                 </div> : null}
         </div>
