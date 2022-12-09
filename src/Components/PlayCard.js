@@ -2,9 +2,8 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import { Grid } from '@mui/material';
 
-
-
 function PlayCard(cardData) {
+    let color = "black";
     let value = cardData.cardData.Value;
     let suit;
     switch (cardData.cardData.Suit) {
@@ -16,9 +15,11 @@ function PlayCard(cardData) {
             break;
         case 'Hearts':
             suit = "♥";
+            color = "red";
             break;
         case 'Spades':
             suit = "♠";
+            color = "red";
             break;
         default:
             suit = "";
@@ -58,7 +59,8 @@ function PlayCard(cardData) {
     }
     if (!isFace()) {
         return (
-            <Box sx={{ width: 100, height: 160, backgroundColor: "#fffde7", color: "#000000" }}>
+            // if isRed is true, then the card is red set color to red
+            <Box sx={{ width: 100, height: 160, backgroundColor: "#fffde7", color:{color}}}>
                 <Grid container direction="row" justifyContent="space-around" height={10}>
                     <Grid item>
                         <p>
