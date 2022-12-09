@@ -1,0 +1,23 @@
+.Central {
+  display: flex;
+  justify-content: center;
+}
+.DownNav {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  height: 100px;
+  width: 100%;
+  overflow: hidden;
+}
+.NoDoubtPut {
+  display: flex;
+  justify-content: center;
+}
+.screenText {
+  font-size: 20px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+.NoCont {
+  white-space: pre-line
+}
