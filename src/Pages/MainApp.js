@@ -60,9 +60,9 @@ const deck = [
 export default function MainApp() {
     const [playerCards, setPlayerCards] = React.useState([]);
     const [computerCards, setComputerCards] = React.useState([]);
+    const [currentDeck, setCurrentDeck] = React.useState([]);
     function dealMeIn() {
         let newDeck = deck;
-
         let card1 = newDeck[Math.floor(Math.random() * newDeck.length)];
         newDeck = newDeck.filter(function (obj) {
             return obj !== card1;
@@ -79,30 +79,52 @@ export default function MainApp() {
         newDeck = newDeck.filter(function (obj) {
             return obj !== card4;
         });
-
+        setCurrentDeck(newDeck);
         setPlayerCards([card1, card3]);
         setComputerCards([card2, card4]);
     }
 
     function CardDisply(props) {
-        function makeCardReadbable(card) {return card.Value + " of " + card.Suit;}
+        function makeCardReadbable(card) { return card.Value + " of " + card.Suit; }
         return (
             <div>
                 <h1>Player:</h1>
                 <h2>{makeCardReadbable(props.player[0])}</h2>
                 <h2>{makeCardReadbable(props.player[1])}</h2>
+                {props.player[2] && <h2>{makeCardReadbable(props.player[2])}</h2>}
+                {props.player[3] && <h2>{makeCardReadbable(props.player[3])}</h2>}
+                {props.player[4] && <h2>{makeCardReadbable(props.player[4])}</h2>}
+                {props.player[5] && <h2>{makeCardReadbable(props.player[5])}</h2>}
                 <h1>Computer:</h1>
                 <h2>{makeCardReadbable(props.computer[0])}</h2>
                 <h2>{makeCardReadbable(props.computer[1])}</h2>
             </div>
         );
     }
+    function hitMe() {
+        let newDeck = currentDeck;
+        let newCard = newDeck[Math.floor(Math.random() * newDeck.length)];
+        newDeck = newDeck.filter(function (obj) {
+            return obj !== newCard;
+        });
+        setCurrentDeck(newDeck);
+        setPlayerCards([...playerCards, newCard]);
+    }
+    function stay() {
+        
+    }
+
     return (
         <div>
             <Box sx={{ width: '100%' }}>
             </Box>
             <Button onClick={dealMeIn}>MAIN BUTTON</Button>
             {playerCards.length > 0 && computerCards.length > 0 ? <CardDisply player={playerCards} computer={computerCards} /> : null}
+            {playerCards.length > 0 && computerCards.length > 0 ? 
+            <div>
+                <Button onClick={hitMe}>HitMe</Button>
+                <Button onClick={stay}>Stay</Button>
+            </div> : null}
         </div>
     );
 }
