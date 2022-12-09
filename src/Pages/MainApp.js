@@ -20,6 +20,8 @@ export default function MainApp() {
     const [playerCards, setPlayerCards] = React.useState([]);
     const [computerCards, setComputerCards] = React.useState([]);
     const [currentDeck, setCurrentDeck] = React.useState([]);
+    const [flipEm, setFlipEm] = React.useState(false);
+
     function dealMeIn() {
         let newDeck = deck;
         let starterCards = [];
@@ -58,8 +60,12 @@ export default function MainApp() {
     }
 
     function CardDisplay() {
-        let displayedComputerCards = computerCards;
-        displayedComputerCards[0] = { Value: 'Hidden', Suit: 'Card' };
+        let hiddenCards = computerCards;
+        if (flipEm) {
+            hiddenCards = computerCards;
+        } else {
+            hiddenCards = [{ Value: 'Hidden', Suit: 'Hidden' }, computerCards[0]];
+        }
         return (
             <div>
                 <h1>Player Cards:</h1>
@@ -69,7 +75,7 @@ export default function MainApp() {
                 <p>Score: {calcScore(playerCards)}</p>
                 <h1>Computer Cards:</h1>
                 <Grid container spacing={6}>
-                    {displayedComputerCards.map((card, i) => <Grid key={i} item xs={1}><PlayCard cardData={card}/></Grid>)}
+                    {hiddenCards.map((card, i) => <Grid key={i} item xs={1}><PlayCard cardData={card}/></Grid>)}
                 </Grid>
             </div>
         );
@@ -89,6 +95,7 @@ export default function MainApp() {
         if (calcScore(playerCards) <= 21) {
             computersTurn();
         } else {
+            setFlipEm(true);
             alert(`You had ${calcScore(playerCards)} but the computer had ${calcScore(computerCards)}. You Lose!`);
         }
     }
@@ -113,12 +120,15 @@ export default function MainApp() {
     function endGame(fastCards) {
         setComputerCards(fastCards);
         if (calcScore(fastCards) > 21) {
+            setFlipEm(true);
             alert(`You had ${calcScore(playerCards)} and the computer had ${calcScore(fastCards)}. You Win!`);
         }
         else if (calcScore(fastCards) >= calcScore(playerCards)) {
+            setFlipEm(true);
             alert(`You had ${calcScore(playerCards)} and the computer had ${calcScore(fastCards)}. You Lose!`);
         }
         else if (calcScore(fastCards) < calcScore(playerCards)) {
+            setFlipEm(true);
             alert(`You had ${calcScore(playerCards)} and the computer had ${calcScore(fastCards)}. You Win!`);
         }
     }
