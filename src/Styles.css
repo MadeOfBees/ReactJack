@@ -21,3 +21,7 @@
 .NoCont {
   white-space: pre-line
 }
+.StayThere {
+  /* adds margin to top */
+  margin-top: 3.25ex;
+}
