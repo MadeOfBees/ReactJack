@@ -59,6 +59,15 @@ export default function MainApp() {
         setCurrentDeck(newDeck);
         setPlayerCards([starterCards[0], starterCards[2]]);
         setComputerCards([starterCards[1], starterCards[3]]);
+        if (calcScore([starterCards[0], starterCards[2]]) === 21) {
+            endGame();
+            setWinType(`You got 21 with your first 2 cards! The computer had ${calcScore(computerCards)}. You Win!`);
+            handleOpen();
+        } else if (calcScore([starterCards[1], starterCards[3]]) === 21) {
+            endGame();
+            setWinType(`The computer got 21 with their first 2 cards! You had ${calcScore(playerCards)}. You Lose!`);
+            handleOpen();
+        }
     }
 
     function calcScore(inputCards) {
@@ -142,7 +151,12 @@ export default function MainApp() {
         let fastCards = computerCards;
         turn(fastCards);
         function turn(fastCards) {
-            while (calcScore(fastCards) < 17) {
+            if (fastCards.length === 5 && calcScore(fastCards) <= 21) {
+                endGame();
+                setWinType(`The computer got up to 5 cards without going over 21, their score was ${calcScore(fastCards)} and you had ${calcScore(playerCards)}. You Lose!`);
+                handleOpen();
+            }
+            if (calcScore(fastCards) < 17) {
                 let newDeck = currentDeck;
                 let newCard = newDeck[Math.floor(Math.random() * newDeck.length)];
                 newDeck = newDeck.filter(function (obj) {
@@ -150,6 +164,7 @@ export default function MainApp() {
                 });
                 setCurrentDeck(newDeck);
                 fastCards = [...fastCards, newCard];
+                turn(fastCards);
             }
             endings(fastCards);
         }
