@@ -1,13 +1,9 @@
 import GitHubIcon from '@mui/icons-material/GitHub';
 
 function greetings() {
-  if (new Date().getHours() < 12) {
-    return 'morning';
-  } else if (new Date().getHours() < 18) {
-    return 'afternoon';
-  } else {
-    return 'evening';
-  };
+  if (new Date().getHours() < 12) { return 'morning'; }
+  else if (new Date().getHours() < 18) { return 'afternoon'; }
+  else { return 'evening'; };
 };
 
 function AboutUs() {
