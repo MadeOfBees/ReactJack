@@ -12,6 +12,7 @@ function PlayCard(cardData) {
             break;
         case 'Diamonds':
             suit = "♦";
+            color = "red";
             break;
         case 'Hearts':
             suit = "♥";
@@ -19,7 +20,6 @@ function PlayCard(cardData) {
             break;
         case 'Spades':
             suit = "♠";
-            color = "red";
             break;
         default:
             suit = "";
