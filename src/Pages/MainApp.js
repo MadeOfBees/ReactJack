@@ -20,6 +20,12 @@ export default function MainApp() {
         deck.push({ Value: 'K', Suit: suits[i] });
     }
 
+    function handleEndState(string) {
+        endGame();
+        setWinType(string);
+        handleOpen();
+    }
+
     const [playerCards, setPlayerCards] = React.useState([]);
     const [computerCards, setComputerCards] = React.useState([]);
     const [currentDeck, setCurrentDeck] = React.useState([]);
@@ -60,13 +66,9 @@ export default function MainApp() {
         setPlayerCards([starterCards[0], starterCards[2]]);
         setComputerCards([starterCards[1], starterCards[3]]);
         if (calcScore([starterCards[0], starterCards[2]]) === 21) {
-            endGame();
-            setWinType(`You got 21 with your first 2 cards! The computer had ${calcScore(computerCards)}. You Win!`);
-            handleOpen();
+            handleEndState(`You got 21 with your first 2 cards! The computer had ${calcScore(computerCards)}. You Win!`);
         } else if (calcScore([starterCards[1], starterCards[3]]) === 21) {
-            endGame();
-            setWinType(`The computer got 21 with their first 2 cards! You had ${calcScore(playerCards)}. You Lose!`);
-            handleOpen();
+            handleEndState(`The computer got 21 with their first 2 cards! You had ${calcScore(playerCards)}. You Lose!`);
         }
     }
 
@@ -125,15 +127,11 @@ export default function MainApp() {
         setPlayerCards([...playerCards, newCard]);
         var currentCards = [...playerCards, newCard];
         if (calcScore(currentCards) > 21) {
-            endGame();
-            setWinType(`You went over 21 with ${calcScore(currentCards)} the computer had ${calcScore(computerCards)}. You Lose!`);
-            handleOpen();
+            handleEndState(`You went over 21 with ${calcScore(currentCards)} the computer had ${calcScore(computerCards)}. You Lose!`);
 
         }
         if (currentCards.length === 5 && calcScore(currentCards) <= 21) {
-            endGame();
-            setWinType(`You got up to 5 cards without going over 21, your score was ${calcScore(currentCards)} and the computer had ${calcScore(computerCards)}. You Win!`);
-            handleOpen();
+            handleEndState(`You got up to 5 cards without going over 21, your score was ${calcScore(currentCards)} and the computer had ${calcScore(computerCards)}. You Win!`);
         }
     }
 
@@ -141,9 +139,7 @@ export default function MainApp() {
         if (calcScore(playerCards) <= 21) {
             computersTurn();
         } else {
-            endGame();
-            setWinType(`You had ${calcScore(playerCards)} but the computer had ${calcScore(computerCards)}. You Lose!`);
-            handleOpen();
+            handleEndState(`You had ${calcScore(playerCards)} but the computer had ${calcScore(computerCards)}. You Lose!`);
         }
     }
 
@@ -152,9 +148,9 @@ export default function MainApp() {
         turn(fastCards);
         function turn(fastCards) {
             if (fastCards.length === 5 && calcScore(fastCards) <= 21) {
-                endGame();
-                setWinType(`The computer got up to 5 cards without going over 21, their score was ${calcScore(fastCards)} and you had ${calcScore(playerCards)}. You Lose!`);
-                handleOpen();
+
+                handleEndState(`The computer got up to 5 cards without going over 21, their score was ${calcScore(fastCards)} and you had ${calcScore(playerCards)}. You Lose!`);
+
             }
             if (calcScore(fastCards) < 17) {
                 let newDeck = currentDeck;
@@ -173,19 +169,13 @@ export default function MainApp() {
     function endings(fastCards) {
         setComputerCards(fastCards);
         if (calcScore(fastCards) > 21) {
-            endGame();
-            setWinType(`You had ${calcScore(playerCards)} and the computer had ${calcScore(fastCards)}. You Win!`);
-            handleOpen();
+            handleEndState(`You had ${calcScore(playerCards)} and the computer had ${calcScore(fastCards)}. You Win!`);
         }
         else if (calcScore(fastCards) >= calcScore(playerCards)) {
-            endGame();
-            setWinType(`You had ${calcScore(playerCards)} and the computer had ${calcScore(fastCards)}. You Lose!`);
-            handleOpen();
+            handleEndState(`You had ${calcScore(playerCards)} and the computer had ${calcScore(fastCards)}. You Lose!`);
         }
         else if (calcScore(fastCards) < calcScore(playerCards)) {
-            endGame();
-            setWinType(`You had ${calcScore(playerCards)} and the computer had ${calcScore(fastCards)}. You Win!`);
-            handleOpen();
+            handleEndState(`You had ${calcScore(playerCards)} and the computer had ${calcScore(fastCards)}. You Win!`);
         }
     }
 
