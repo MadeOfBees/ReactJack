@@ -3,6 +3,8 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { Grid } from '@mui/material';
 import PlayCard from '../Components/PlayCard';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
 
 export default function MainApp() {
     const cSpace = 13;
@@ -24,8 +26,25 @@ export default function MainApp() {
     const [flipEm, setFlipEm] = React.useState(false);
     const [gameOver, setGameOver] = React.useState(false);
     const [hasStarted, setHasStarted] = React.useState(false);
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+    const [winType, setWinType] = React.useState('');
+
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 400,
+        bgcolor: 'background.paper',
+        border: '2px solid #000',
+        boxShadow: 24,
+        p: 4,
+    };
 
     function dealMeIn() {
+        setOpen(false);
         setGameOver(false);
         setHasStarted(true);
         setFlipEm(false);
@@ -98,11 +117,14 @@ export default function MainApp() {
         var currentCards = [...playerCards, newCard];
         if (calcScore(currentCards) > 21) {
             endGame();
-            alert(`You went over 21 with ${calcScore(currentCards)} the computer had ${calcScore(computerCards)}. You Lose!`);
+            setWinType(`You went over 21 with ${calcScore(currentCards)} the computer had ${calcScore(computerCards)}. You Lose!`);
+            handleOpen();
+
         }
         if (currentCards.length === 5 && calcScore(currentCards) <= 21) {
             endGame();
-            alert(`You got up to 5 cards without going over 21, your score was ${calcScore(currentCards)} and the computer had ${calcScore(computerCards)}. You Win!`);
+            setWinType(`You got up to 5 cards without going over 21, your score was ${calcScore(currentCards)} and the computer had ${calcScore(computerCards)}. You Win!`);
+            handleOpen();
         }
     }
 
@@ -111,7 +133,8 @@ export default function MainApp() {
             computersTurn();
         } else {
             endGame();
-            alert(`You had ${calcScore(playerCards)} but the computer had ${calcScore(computerCards)}. You Lose!`);
+            setWinType(`You had ${calcScore(playerCards)} but the computer had ${calcScore(computerCards)}. You Lose!`);
+            handleOpen();
         }
     }
 
@@ -136,15 +159,18 @@ export default function MainApp() {
         setComputerCards(fastCards);
         if (calcScore(fastCards) > 21) {
             endGame();
-            alert(`You had ${calcScore(playerCards)} and the computer had ${calcScore(fastCards)}. You Win!`);
+            setWinType(`You had ${calcScore(playerCards)} and the computer had ${calcScore(fastCards)}. You Win!`);
+            handleOpen();
         }
         else if (calcScore(fastCards) >= calcScore(playerCards)) {
             endGame();
-            alert(`You had ${calcScore(playerCards)} and the computer had ${calcScore(fastCards)}. You Lose!`);
+            setWinType(`You had ${calcScore(playerCards)} and the computer had ${calcScore(fastCards)}. You Lose!`);
+            handleOpen();
         }
         else if (calcScore(fastCards) < calcScore(playerCards)) {
             endGame();
-            alert(`You had ${calcScore(playerCards)} and the computer had ${calcScore(fastCards)}. You Win!`);
+            setWinType(`You had ${calcScore(playerCards)} and the computer had ${calcScore(fastCards)}. You Win!`);
+            handleOpen();
         }
     }
 
@@ -160,10 +186,23 @@ export default function MainApp() {
                 {playerCards.length > 0 && computerCards.length > 0 ? <CardDisplay /> : null}
                 {playerCards.length > 0 && computerCards.length > 0 ?
                     <div>
-                        {gameOver ? <Button onClick={dealMeIn}>New Game</Button> : <Button onClick={hitMe}>Hit Me</Button>}
+                        {gameOver ? null : <Button onClick={hitMe}>Hit Me</Button>}
                         {gameOver ? <Button onClick={stay}>Score</Button> : <Button onClick={stay}>Stay</Button>}
                     </div> : null}
             </Box>
+            <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={style}>
+                    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                        {winType}
+                    </Typography>
+                    <Button onClick={dealMeIn} className="SpaceAge">New Game</Button>
+                </Box>
+            </Modal>
         </div>
     );
 }
