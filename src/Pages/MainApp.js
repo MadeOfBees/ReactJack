@@ -85,7 +85,7 @@ export default function MainApp() {
                 score += parseInt(card.Value);
             }
         });
-        if (score <= 21) {
+        if (score < 21) {
             inputCards.forEach(card => {
                 if (card.Value === 'A') {
                     score += 10;
