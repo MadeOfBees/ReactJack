@@ -27,12 +27,12 @@ function PlayCard(cardData) {
             break;
     }
     function isFace() {
-        if (value === "A" || value === "J" || value === "Q" || value === "K" || value === "?") {return true;}
-        else {return false;}
+        if (value === "A" || value === "J" || value === "Q" || value === "K" || value === "?") { return true; }
+        else { return false; }
     }
     function MiddleOutput() {
         const array = [];
-        if (isFace()) {return <h3>{value}</h3>}
+        if (isFace()) { return <h3>{value}</h3> }
         else {
             for (let i = 0; i < parseInt(value); i++) {
                 array.push(suit);
@@ -56,7 +56,7 @@ function PlayCard(cardData) {
     }
     if (!isFace()) {
         return (
-            <Box sx={{ width: 100, height: 160, backgroundColor: "#fffde7", color:{color}}}>
+            <Box sx={{ width: 100, height: 160, backgroundColor: "#fffde7", color: { color } }}>
                 <Grid container direction="row" justifyContent="space-around" height={10}>
                     <Grid item>
                         <p>
@@ -90,7 +90,7 @@ function PlayCard(cardData) {
         );
     } else {
         return (
-            <Box sx={{ width: 100, height: 160, backgroundColor: "#fffde7", color:{color}}}>
+            <Box sx={{ width: 100, height: 160, backgroundColor: "#fffde7", color: { color } }}>
                 <Grid container direction="row" justifyContent="space-around">
                     <Grid item>
                         <h1 className='StayThere'>{value}{suit}</h1>
