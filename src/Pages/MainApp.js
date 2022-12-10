@@ -76,7 +76,7 @@ export default function MainApp() {
         let score = 0;
         inputCards.forEach(card => {
             if (card.Value === 'A') {
-                score += 11;
+                score += 1;
             }
             else if (card.Value === 'J' || card.Value === 'Q' || card.Value === 'K') {
                 score += 10;
@@ -85,10 +85,10 @@ export default function MainApp() {
                 score += parseInt(card.Value);
             }
         });
-        if (score > 21) {
+        if (score <= 21) {
             inputCards.forEach(card => {
                 if (card.Value === 'A') {
-                    score -= 10;
+                    score += 10;
                 }
             });
         }
@@ -148,11 +148,9 @@ export default function MainApp() {
         turn(fastCards);
         function turn(fastCards) {
             if (fastCards.length === 5 && calcScore(fastCards) <= 21) {
-
                 handleEndState(`The computer got up to 5 cards without going over 21, their score was ${calcScore(fastCards)} and you had ${calcScore(playerCards)}. You Lose!`);
-
             }
-            if (calcScore(fastCards) < 17) {
+            if (calcScore(fastCards) <= 17) {
                 let newDeck = currentDeck;
                 let newCard = newDeck[Math.floor(Math.random() * newDeck.length)];
                 newDeck = newDeck.filter(function (obj) {
