@@ -116,7 +116,7 @@ export default function MainApp() {
         function turn(fastCards) {
             if (fastCards.length === 5 && calcScore(fastCards) <= 21) { handleEndState(`The computer got up to 5 cards without going over 21, their score was ${calcScore(fastCards)} and you had ${calcScore(playerCards)}. You Lose!`); }
             while (calcScore(fastCards) <= 17) {
-                let newDeck = currentDeck;
+                let newDeck = fastCards;
                 let newCard = newDeck[Math.floor(Math.random() * newDeck.length)];
                 newDeck = newDeck.filter(function (obj) {
                     return obj !== newCard;
