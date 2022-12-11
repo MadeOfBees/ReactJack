@@ -29,18 +29,17 @@ export default function MainApp() {
     const [currentDeck, setCurrentDeck] = React.useState([]);
     const [flipEm, setFlipEm] = React.useState(false);
     const [gameOver, setGameOver] = React.useState(false);
-    const [hasStarted, setHasStarted] = React.useState(false);
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const [winType, setWinType] = React.useState('');
-
+    //eslint-disable-next-line
+    React.useEffect(() => { dealMeIn(); }, []);
     const style = { position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 400, bgcolor: 'background.paper', border: '2px solid #000', boxShadow: 24, p: 4, };
 
     function dealMeIn() {
         setOpen(false);
         setGameOver(false);
-        setHasStarted(true);
         setFlipEm(false);
         let newDeck = deck;
         let starterCards = [];
@@ -127,7 +126,6 @@ export default function MainApp() {
     return (
         <div >
             <Box sx={{ width: '100%' }}>
-                {!hasStarted ? <Button onClick={dealMeIn} className="PushTheButton">Deal Me In:</Button> : null}
                 {playerCards.length > 0 && computerCards.length > 0 ? <CardDisplay /> : null}
                 {playerCards.length > 0 && computerCards.length > 0 ?
                     <div>
