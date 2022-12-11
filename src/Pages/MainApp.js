@@ -69,7 +69,7 @@ export default function MainApp() {
         });
         if (score < 21) {
             inputCards.forEach(card => {
-                if (card.Value === 'A') { score += 10; }
+                if (card.Value === 'A') { score -= 10; }
             });
         }
         return score;
