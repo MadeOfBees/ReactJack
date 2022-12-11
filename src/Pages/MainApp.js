@@ -61,25 +61,14 @@ export default function MainApp() {
     }
 
     function calcScore(inputCards) {
-        let numAces = 0;
-        let score = 0;
-        for (let card of inputCards) {
-          score += (card.Value === "A")
-            ? numAces++
-            : (card.Value === "J" || card.Value === "Q" || card.Value === "K")
-              ? 10
-              : parseInt(card.Value);
-        }
-        for (let i = 0; i < numAces; i++) {
-          score += (score + 11 <= 21) ? 11 : 1;
-        }
+        let score = inputCards.reduce((sum, card) => sum + ((card.Value === "A") ? 1 : (card.Value === "J" || card.Value === "Q" || card.Value === "K") ? 10 : parseInt(card.Value)), 0);
+        for (let i = 0; i < inputCards.filter(card => card.Value === "A").length; i++) {score += (score + 11 <= 21) ? 11 : 1;}
         return score;
       }
       
+      
     function CardDisplay() {
-        let hiddenCards = [];
-        if (flipEm) { hiddenCards = computerCards; }
-        else { hiddenCards = [{ Value: '?', Suit: '?' }, computerCards[0]]; }
+        let hiddenCards = flipEm ? computerCards : [{ Value: "?", Suit: "?" }, computerCards[0]];
         return (
             <div>
                 <h1>Player Cards:</h1>
@@ -134,6 +123,7 @@ export default function MainApp() {
         setGameOver(true);
         setFlipEm(true);
     }
+
     return (
         <div >
             <Box sx={{ width: '100%' }}>
