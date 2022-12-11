@@ -104,7 +104,7 @@ export default function MainApp() {
         setCurrentDeck(newDeck);
         setPlayerCards([...playerCards, newCard]);
         var currentCards = [...playerCards, newCard];
-        if (calcScore(currentCards) > 21) { handleEndState(`You went over 21 with ${calcScore(currentCards)} the computer had ${calcScore(computerCards)}. You Lose!`); }
+        if (calcScore(currentCards) > 21) { handleEndState(`Busted!! You went over 21 with ${calcScore(currentCards)} the computer had ${calcScore(computerCards)}. You Lose!`); }
     }
 
     function stay() {
