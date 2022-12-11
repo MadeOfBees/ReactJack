@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import { Grid } from '@mui/material';
 
 function PlayCard(cardData) {
+    const cream = "#e6e3dc";
     let value = cardData.cardData.Value;
     let color = (cardData.cardData.Suit === "Clubs" || cardData.cardData.Suit === "Spades") ? "black" : "red";
     let suit = cardData.cardData.Suit === "Clubs" ? "♣" : cardData.cardData.Suit === "Diamonds" ? "♦" : cardData.cardData.Suit === "Hearts" ? "♥" :cardData.cardData.Suit === "Spades" ? "♠" : "";
@@ -39,7 +40,7 @@ function PlayCard(cardData) {
     
     if (!isFace()) {
         return (
-            <Box sx={{ width: 100, height: 160, backgroundColor: "#fffde7", color: { color } }}>
+            <Box sx={{ width: 100, height: 160, backgroundColor: cream, color: { color } }}>
                 <Grid container direction="row" justifyContent="space-around" height={10}>
                     <Grid item>
                         <p>
@@ -73,7 +74,7 @@ function PlayCard(cardData) {
         );
     } else {
         return (
-            <Box sx={{ width: 100, height: 160, backgroundColor: "#fffde7", color: { color } }}>
+            <Box sx={{ width: 100, height: 160, backgroundColor: cream, color: { color } }}>
                 <Grid container direction="row" justifyContent="space-around">
                     <Grid item>
                         <h1 className='StayThere'>{value}{suit}</h1>
