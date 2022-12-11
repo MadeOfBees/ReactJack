@@ -54,10 +54,10 @@ export default function MainApp() {
         setPlayerCards([starterCards[0], starterCards[2]]);
         setComputerCards([starterCards[1], starterCards[3]]);
         if (calcScore([starterCards[1], starterCards[3]]) === 21) {
-            handleEndState(`The computer got 21 with their first 2 cards! You had ${calcScore([starterCards[0], starterCards[2]])}. You Lose!`);
+            handleEndState(`Blackjack! The computer got 21 with their first 2 cards! You had ${calcScore([starterCards[0], starterCards[2]])}. You Lose!`);
             return;
         } else if (calcScore([starterCards[0], starterCards[2]]) === 21) {
-            handleEndState(`You got 21 with your first 2 cards! The computer had ${calcScore([starterCards[1], starterCards[3]]) }. You Win!`);
+            handleEndState(`Blackjack! You got 21 with your first 2 cards! The computer had ${calcScore([starterCards[1], starterCards[3]]) }. You Win!`);
             return;
         } 
     }
