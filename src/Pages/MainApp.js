@@ -31,7 +31,6 @@ export default function MainApp() {
     const [currentDeck, setCurrentDeck] = React.useState([]);
     const [flipEm, setFlipEm] = React.useState(false);
     const [gameOver, setGameOver] = React.useState(false);
-    const [hasStarted, setHasStarted] = React.useState(false);
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -42,7 +41,6 @@ export default function MainApp() {
     function dealMeIn() {
         setOpen(false);
         setGameOver(false);
-        setHasStarted(true);
         setFlipEm(false);
         let newDeck = deck;
         let starterCards = [];
@@ -139,12 +137,11 @@ export default function MainApp() {
     return (
         <div >
             <Box sx={{ width: '100%' }}>
-                {!hasStarted ? <Button onClick={dealMeIn} className="PushTheButton">Deal Me In:</Button> : null}
                 {playerCards.length > 0 && computerCards.length > 0 ? <CardDisplay /> : null}
                 {playerCards.length > 0 && computerCards.length > 0 ?
-                    <div>
-                        {gameOver ? null : <Button onClick={hitMe}>Hit Me</Button>}
-                        {gameOver ? <Button onClick={stay}>Score</Button> : <Button onClick={stay}>Stay</Button>}
+                    <div centered>
+                        {gameOver ? null : <Button sx={{fontSize: 40}}  onClick={hitMe}>Hit</Button>}
+                        {gameOver ? <Button sx={{fontSize: 40}}  onClick={stay}>Score</Button> : <Button sx={{fontSize: 40}}  onClick={stay}>Stay</Button>}
                     </div> : null}
             </Box>
             <Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">

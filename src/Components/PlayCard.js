@@ -5,7 +5,7 @@ import { Grid } from '@mui/material';
 function PlayCard(cardData) {
     let value = cardData.cardData.Value;
     let color = (cardData.cardData.Suit === "Clubs" || cardData.cardData.Suit === "Spades") ? "black" : "red";
-    let suit = cardData.cardData.Suit === "Clubs" ? "♣" : cardData.cardData.Suit === "Diamonds" ? "♦" : cardData.cardData.Suit === "Hearts" ? "♥" : "♠";
+    let suit = cardData.cardData.Suit === "Clubs" ? "♣" : cardData.cardData.Suit === "Diamonds" ? "♦" : cardData.cardData.Suit === "Hearts" ? "♥" :cardData.cardData.Suit === "Spades" ? "♠" : "";
 
     function isFace() {
         if (value === "A" || value === "J" || value === "Q" || value === "K" || value === "?") { return true; }
