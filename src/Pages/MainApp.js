@@ -67,11 +67,9 @@ export default function MainApp() {
             else if (card.Value === 'J' || card.Value === 'Q' || card.Value === 'K') { score += 10; }
             else { score += parseInt(card.Value); }
         });
-        if (score < 21) {
-            inputCards.forEach(card => {
-                if (card.Value === 'A') { score -= 10; }
-            });
-        }
+        inputCards.forEach(card => {
+            if (card.Value === 'A' && score <= 11) { score += 10; }
+        });
         return score;
     }
 
@@ -102,7 +100,6 @@ export default function MainApp() {
         setPlayerCards([...playerCards, newCard]);
         var currentCards = [...playerCards, newCard];
         if (calcScore(currentCards) > 21) { handleEndState(`You went over 21 with ${calcScore(currentCards)} the computer had ${calcScore(computerCards)}. You Lose!`); }
-        if (currentCards.length === 5 && calcScore(currentCards) <= 21) { handleEndState(`You got up to 5 cards without going over 21, your score was ${calcScore(currentCards)} and the computer had ${calcScore(computerCards)}. You Win!`); }
     }
 
     function stay() {
@@ -111,20 +108,16 @@ export default function MainApp() {
     }
 
     function computersTurn() {
-        turn(computerCards);
-        function turn(fastCards) {
-            if (fastCards.length < 4 && calcScore(fastCards) <= 21) { handleEndState(`The computer got up to 5 cards without going over 21, their score was ${calcScore(fastCards)} and you had ${calcScore(playerCards)}. You Lose!`); }
-            while (calcScore(fastCards) <= 17) {
-                let newDeck = fastCards;
-                let newCard = newDeck[Math.floor(Math.random() * newDeck.length)];
-                newDeck = newDeck.filter(function (obj) {
-                    return obj !== newCard;
-                });
-                setCurrentDeck(newDeck);
-                fastCards = [...fastCards, newCard];
-            }
-            endings(fastCards);
+        let newDeck = currentDeck;
+        let newCards = computerCards;
+        while (calcScore(newCards) < 17) {
+            let newCard = newDeck[Math.floor(Math.random() * newDeck.length)];
+            newDeck = newDeck.filter(function (obj) { return obj !== newCard; });
+            newCards = [...newCards, newCard];
         }
+        setCurrentDeck(newDeck);
+        setComputerCards(newCards);
+        endings(newCards);
     }
 
     function endings(fastCards) {
