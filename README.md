@@ -7,7 +7,6 @@ A JavaScript port of the classic card game blackjack, built using the React fram
 ## "Installation"/Instructions:
 
 Click the Github Pages link: https://madeofbees.github.io/ReactJack/ to navigate to the site then once there you can play blackjack, if you don't know the rules click the "How To Play" button in the bottom left corner. if you want to toggle dark mode click the "Dark Mode" button in the bottom right corner.
-
 ![1](https://user-images.githubusercontent.com/9198297/206930573-13160971-c214-4849-8241-8aa055387f3d.jpg)
 ![3](https://user-images.githubusercontent.com/9198297/206930575-3542c9d2-7e81-4204-87ed-c138b23c60e1.jpg)
 ![2](https://user-images.githubusercontent.com/9198297/206930576-d1e338bb-e992-482b-9711-6760688096fd.jpg)
