@@ -10,13 +10,13 @@ export default function MainApp() {
     const cSpace = 13;
     const deck = [];
     const suits = ['Clubs', 'Diamonds', 'Hearts', 'Spades'];
-    for (let i = 0; i < suits.length; i++) {
-        deck.push({ Value: 'A', Suit: suits[i] });
-        for (let b = 2; b < 11; b++) { deck.push({ Value: b.toString(), Suit: suits[i] }); }
-        deck.push({ Value: 'J', Suit: suits[i] });
-        deck.push({ Value: 'Q', Suit: suits[i] });
-        deck.push({ Value: 'K', Suit: suits[i] });
-    }
+    for (let suit of suits) {
+        deck.push({ Value: "A", Suit: suit });
+        for (let value = 2; value < 11; value++) {deck.push({ Value: value.toString(), Suit: suit });}
+        deck.push({ Value: "J", Suit: suit });
+        deck.push({ Value: "Q", Suit: suit });
+        deck.push({ Value: "K", Suit: suit });
+      }
 
     function handleEndState(string) {
         endGame();
