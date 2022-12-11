@@ -45,29 +45,37 @@ export default function MainApp() {
         let newDeck = deck;
         let starterCards = [];
         for (let i = 0; i < 4; i++) {
-          starterCards[i] = newDeck[Math.floor(Math.random() * newDeck.length)];
-          newDeck = newDeck.filter(obj => obj !== starterCards[i]);
+            starterCards[i] = newDeck[Math.floor(Math.random() * newDeck.length)];
+            newDeck = newDeck.filter(function (obj) {
+                return obj !== starterCards[i];
+            });
         }
         setCurrentDeck(newDeck);
         setPlayerCards([starterCards[0], starterCards[2]]);
         setComputerCards([starterCards[1], starterCards[3]]);
         if (calcScore([starterCards[0], starterCards[2]]) === 21) {
-          handleEndState(`You got 21 with your first 2 cards! The computer had ${calcScore(computerCards)}. You Win!`);
+            handleEndState(`You got 21 with your first 2 cards! The computer had ${calcScore(computerCards)}. You Win!`);
         } else if (calcScore([starterCards[1], starterCards[3]]) === 21) {
-          handleEndState(`The computer got 21 with their first 2 cards! You had ${calcScore(playerCards)}. You Lose!`);
+            handleEndState(`The computer got 21 with their first 2 cards! You had ${calcScore(playerCards)}. You Lose!`);
         }
-      }      
-
-    function calcScore(inputCards) {
-        let numAces;
-        let score = inputCards.reduce((sum, card) =>
-            card.Value === 'A' ? sum.concat(++numAces) :
-                card.Value === 'J' || card.Value === 'Q' || card.Value === 'K' ? sum + 10 :
-                    sum + parseInt(card.Value), 0);
-        for (let i = 0; i < numAces; i++) score += (score + 11 <= 21) ? 11 : 1;
-        return score;
     }
 
+    function calcScore(inputCards) {
+        let numAces = 0;
+        let score = 0;
+        for (let card of inputCards) {
+          score += (card.Value === "A")
+            ? numAces++
+            : (card.Value === "J" || card.Value === "Q" || card.Value === "K")
+              ? 10
+              : parseInt(card.Value);
+        }
+        for (let i = 0; i < numAces; i++) {
+          score += (score + 11 <= 21) ? 11 : 1;
+        }
+        return score;
+      }
+      
     function CardDisplay() {
         let hiddenCards = [];
         if (flipEm) { hiddenCards = computerCards; }
@@ -75,10 +83,14 @@ export default function MainApp() {
         return (
             <div>
                 <h1>Player Cards:</h1>
-                <Grid container spacing={cSpace}>{playerCards.map((card, i) => <Grid key={i} item xs={1}><PlayCard cardData={card} /></Grid>)}</Grid>
+                <Grid container spacing={cSpace}>
+                    {playerCards.map((card, i) => <Grid key={i} item xs={1}><PlayCard cardData={card} /></Grid>)}
+                </Grid>
                 <p>Score: {calcScore(playerCards)}</p>
                 <h1>Computer Cards:</h1>
-                <Grid container spacing={cSpace}>{hiddenCards.map((card, i) => <Grid key={i} item xs={1}><PlayCard cardData={card} /></Grid>)}</Grid>
+                <Grid container spacing={cSpace}>
+                    {hiddenCards.map((card, i) => <Grid key={i} item xs={1}><PlayCard cardData={card} /></Grid>)}
+                </Grid>
             </div>
         );
     }
@@ -122,18 +134,22 @@ export default function MainApp() {
         setGameOver(true);
         setFlipEm(true);
     }
-
     return (
         <div >
             <Box sx={{ width: '100%' }}>
                 {!hasStarted ? <Button onClick={dealMeIn} className="PushTheButton">Deal Me In:</Button> : null}
                 {playerCards.length > 0 && computerCards.length > 0 ? <CardDisplay /> : null}
                 {playerCards.length > 0 && computerCards.length > 0 ?
-                    <div>{gameOver ? null : <Button onClick={hitMe}>Hit Me</Button>}{gameOver ? <Button onClick={stay}>Score</Button> : <Button onClick={stay}>Stay</Button>}</div> : null}
+                    <div>
+                        {gameOver ? null : <Button onClick={hitMe}>Hit Me</Button>}
+                        {gameOver ? <Button onClick={stay}>Score</Button> : <Button onClick={stay}>Stay</Button>}
+                    </div> : null}
             </Box>
             <Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
                 <Box sx={style}>
-                    <Typography id="modal-modal-description" sx={{ mt: 2 }}>{winType}</Typography>
+                    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                        {winType}
+                    </Typography>
                     <Button onClick={dealMeIn} className="SpaceAge">New Game</Button>
                 </Box>
             </Modal>
