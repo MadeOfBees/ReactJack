@@ -7,16 +7,18 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 
 export default function MainApp() {
+    // eslint-disable-next-line
+    React.useEffect(() => { dealMeIn(); }, []);
     const cSpace = 13;
     const deck = [];
     const suits = ['Clubs', 'Diamonds', 'Hearts', 'Spades'];
-    for (let suit of suits) {
-        deck.push({ Value: "A", Suit: suit });
-        for (let value = 2; value < 11; value++) {deck.push({ Value: value.toString(), Suit: suit });}
-        deck.push({ Value: "J", Suit: suit });
-        deck.push({ Value: "Q", Suit: suit });
-        deck.push({ Value: "K", Suit: suit });
-      }
+    for (let i = 0; i < suits.length; i++) {
+        deck.push({ Value: 'A', Suit: suits[i] });
+        for (let b = 2; b < 11; b++) { deck.push({ Value: b.toString(), Suit: suits[i] }); }
+        deck.push({ Value: 'J', Suit: suits[i] });
+        deck.push({ Value: 'Q', Suit: suits[i] });
+        deck.push({ Value: 'K', Suit: suits[i] });
+    }
 
     function handleEndState(string) {
         endGame();
@@ -29,17 +31,18 @@ export default function MainApp() {
     const [currentDeck, setCurrentDeck] = React.useState([]);
     const [flipEm, setFlipEm] = React.useState(false);
     const [gameOver, setGameOver] = React.useState(false);
+    const [hasStarted, setHasStarted] = React.useState(false);
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const [winType, setWinType] = React.useState('');
-    //eslint-disable-next-line
-    React.useEffect(() => { dealMeIn(); }, []);
+
     const style = { position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 400, bgcolor: 'background.paper', border: '2px solid #000', boxShadow: 24, p: 4, };
 
     function dealMeIn() {
         setOpen(false);
         setGameOver(false);
+        setHasStarted(true);
         setFlipEm(false);
         let newDeck = deck;
         let starterCards = [];
@@ -60,14 +63,25 @@ export default function MainApp() {
     }
 
     function calcScore(inputCards) {
-        let score = inputCards.reduce((sum, card) => sum + ((card.Value === "A") ? 1 : (card.Value === "J" || card.Value === "Q" || card.Value === "K") ? 10 : parseInt(card.Value)), 0);
-        for (let i = 0; i < inputCards.filter(card => card.Value === "A").length; i++) {score += (score + 11 <= 21) ? 11 : 1;}
+        let numAces = 0;
+        let score = 0;
+        for (let card of inputCards) {
+            score += (card.Value === "A")
+                ? numAces++
+                : (card.Value === "J" || card.Value === "Q" || card.Value === "K")
+                    ? 10
+                    : parseInt(card.Value);
+        }
+        for (let i = 0; i < numAces; i++) {
+            score += (score + 11 <= 21) ? 11 : 1;
+        }
         return score;
-      }
-      
-      
+    }
+
     function CardDisplay() {
-        let hiddenCards = flipEm ? computerCards : [{ Value: "?", Suit: "?" }, computerCards[0]];
+        let hiddenCards = [];
+        if (flipEm) { hiddenCards = computerCards; }
+        else { hiddenCards = [{ Value: '?', Suit: '?' }, computerCards[0]]; }
         return (
             <div>
                 <h1>Player Cards:</h1>
@@ -122,10 +136,10 @@ export default function MainApp() {
         setGameOver(true);
         setFlipEm(true);
     }
-
     return (
         <div >
             <Box sx={{ width: '100%' }}>
+                {!hasStarted ? <Button onClick={dealMeIn} className="PushTheButton">Deal Me In:</Button> : null}
                 {playerCards.length > 0 && computerCards.length > 0 ? <CardDisplay /> : null}
                 {playerCards.length > 0 && computerCards.length > 0 ?
                     <div>
