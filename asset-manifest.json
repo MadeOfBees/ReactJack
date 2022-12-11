@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/ReactJack/static/css/main.13d17d5c.css",
-    "main.js": "/ReactJack/static/js/main.0cbbb167.js",
+    "main.css": "/ReactJack/static/css/main.26f292f2.css",
+    "main.js": "/ReactJack/static/js/main.3940d376.js",
     "index.html": "/ReactJack/index.html",
-    "main.13d17d5c.css.map": "/ReactJack/static/css/main.13d17d5c.css.map",
-    "main.0cbbb167.js.map": "/ReactJack/static/js/main.0cbbb167.js.map"
+    "main.26f292f2.css.map": "/ReactJack/static/css/main.26f292f2.css.map",
+    "main.3940d376.js.map": "/ReactJack/static/js/main.3940d376.js.map"
   },
   "entrypoints": [
-    "static/css/main.13d17d5c.css",
-    "static/js/main.0cbbb167.js"
+    "static/css/main.26f292f2.css",
+    "static/js/main.3940d376.js"
   ]
 }
