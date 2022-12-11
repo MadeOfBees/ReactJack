@@ -1,6 +1,6 @@
 // import home page
 import Home from './Pages/Home';
-import AboutUs from './Pages/AboutUs';
+import Rules from './Pages/Rules';
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { BottomNavigation, BottomNavigationAction } from '@mui/material';
@@ -41,16 +41,16 @@ function App() {
               element={<Home />}
             />
             <Route
-              path="/AboutUs"
-              element={<AboutUs />}
+              path="/Rules"
+              element={<Rules />}
             />
           </Routes>
         </div>
         <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0}} elevation={3}>
         <BottomNavigation showLabels>
-          <BottomNavigationAction component={Link} to="/AboutUs" label="About us" icon={<ContactPageIcon />} />
+          <BottomNavigationAction component={Link} to="/Rules" label="How to Play" icon={<ContactPageIcon />} />
           <BottomNavigationAction component={Link} to="/Home" label="Home" icon={<HomeIcon />} />
-          <BottomNavigationAction onClick={colorMode.toggleColorMode} label=" Toggle Darkmode" icon={theme.palette.mode === 'dark' ? <ToggleOffIcon /> : <ToggleOnIcon />} />
+          <BottomNavigationAction onClick={colorMode.toggleColorMode} label="Toggle Dark-Mode" icon={theme.palette.mode === 'dark' ? <ToggleOffIcon /> : <ToggleOnIcon />} />
         </BottomNavigation>
         </Paper>
       </Router>
