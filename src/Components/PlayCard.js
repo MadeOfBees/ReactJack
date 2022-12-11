@@ -3,33 +3,15 @@ import Box from '@mui/material/Box';
 import { Grid } from '@mui/material';
 
 function PlayCard(cardData) {
-    let color = "black";
     let value = cardData.cardData.Value;
-    let suit;
-    switch (cardData.cardData.Suit) {
-        case 'Clubs':
-            suit = "♣";
-            break;
-        case 'Diamonds':
-            suit = "♦";
-            color = "red";
-            break;
-        case 'Hearts':
-            suit = "♥";
-            color = "red";
-            break;
-        case 'Spades':
-            suit = "♠";
-            break;
-        default:
-            suit = "";
-            color = "black";
-            break;
-    }
+    let color = (cardData.cardData.Suit === "Clubs" || cardData.cardData.Suit === "Spades") ? "black" : "red";
+    let suit = cardData.cardData.Suit === "Clubs" ? "♣" : cardData.cardData.Suit === "Diamonds" ? "♦" : cardData.cardData.Suit === "Hearts" ? "♥" : "♠";
+
     function isFace() {
         if (value === "A" || value === "J" || value === "Q" || value === "K" || value === "?") { return true; }
         else { return false; }
     }
+
     function MiddleOutput() {
         const array = [];
         if (isFace()) { return <h3>{value}</h3> }
@@ -54,6 +36,7 @@ function PlayCard(cardData) {
             return array
         }
     }
+    
     if (!isFace()) {
         return (
             <Box sx={{ width: 100, height: 160, backgroundColor: "#fffde7", color: { color } }}>
