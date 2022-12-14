@@ -11,11 +11,11 @@ Click the Github Pages link: https://madeofbees.github.io/ReactJack/ to navigate
 
 ## Report an issue:
 
-Yell loudly discribing your your bug and how to replicate the issue
+Yell loudly discribing your your bug and how to replicate the issue.
 
 ## Support me:
 
-This project was made by MadeOfBees (https://github.com/MadeOfBees), if you want to support this project: give me your code plz
+This project was made by MadeOfBees (https://github.com/MadeOfBees), if you want to support this project: give me your code plz.
 
 ## Licence:
 
