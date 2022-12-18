@@ -1,7 +1,5 @@
 # ReactJack
 
-## Description:
-
 A JavaScript port of the classic card game blackjack, built using the React framework and Material UI.
 
 ## "Installation"/Instructions:
