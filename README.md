@@ -10,7 +10,7 @@ Click the Github Pages link: https://madeofbees.github.io/ReactJack/ to navigate
 
 ## Report an issue:
 
-Yell loudly discribing your your bug and how to replicate the issue.
+Contact me at imMadeOfBees@gmail.com explaining the issue and how to replicate it.
 
 ## Support me:
 
